@@ -1,0 +1,64 @@
+
+@mixin cross-browser-properties ($property, $value) {
+	-moz-#{$property}: $value;
+	-webkit-#{$property}: $value;
+	-o-#{$property}: $value;
+	-ms-#{$property}: $value;
+	#{$property}: $value;
+}
+
+@mixin transform($arguments...) {
+	@include cross-browser-properties(transform, $arguments);
+}
+
+@mixin rotation($deg:5deg){
+	@include transform(rotate($deg));
+}
+
+@mixin scale($ratio:1.5){
+	@include transform(scale($ratio));
+}
+
+@mixin cross-animation($param, $value) {
+	@include cross-browser-properties(animation-#{$param}, $value);
+}
+
+@mixin animation($duration: 0.5s, $name: "slidein", $iteration: null, $direction: null, $timing-function: null, $delay: null) {
+	@include cross-animation(duration, $duration);
+	@include cross-animation(name, $name);
+	@if ($iteration) { @include cross-animation(iteration-count, $iteration); }
+	@if ($direction) { @include cross-animation(direction, $direction); }
+	@if ($timing-function) { @include cross-animation(timing-function, $timing-function); }
+	@if ($delay) { @include cross-animation(delay, $delay); }
+}
+
+@mixin transition($property: all, $duration: 0.5s, $timing-function: null, $delay: null) {
+	@include cross-browser-properties(transition-property, $property);
+	@include cross-browser-properties(transition-duration, $duration);
+	@if ($timing-function) { @include cross-browser-properties(transition-timing-function, $timing-function); }
+	@if ($delay) { @include cross-browser-properties(transition-delay, $delay); }
+}
+
+
+@mixin keyframes($name) {
+	@-webkit-keyframes #{$name} {
+		@content; 
+	}
+	@-moz-keyframes #{$name} {
+		@content;
+	}
+	@-ms-keyframes #{$name} {
+		@content;
+	}
+	@keyframes #{$name} {
+		@content;
+	}
+}
+
+@mixin image-shadow($x, $y, $deg, $color: "#444", $alfa: 1) {
+	-webkit-filter: drop-shadow($x $y $deg rgba($color, $alfa));
+	-moz-filter: drop-shadow($x $y $deg rgba($color, $alfa));
+	-o-filter: drop-shadow($x $y $deg rgba($color, $alfa));
+	filter: drop-shadow($x $y $deg rgba($color, $alfa));
+	filter: url(../shadow.svg#drop-shadow);
+}

@@ -1,0 +1,28 @@
+{
+  "name": "voxy",
+  "version": "0.0.1",
+  "authors": [
+    "Nick Roshin <denebb808@gmail.com>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.17",
+    "angular-route": "~1.2.17",
+    "angular-sanitize": "~1.2.17",
+    "angular-animate": "~1.2.17",
+    "angular-bootstrap": "~0.11.0",
+    "bootstrap": "~3.1.1",
+    "ngstorage": "~0.3.0"
+  }
+}

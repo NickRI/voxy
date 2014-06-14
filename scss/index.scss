@@ -1,0 +1,15 @@
+@import 'umixins';
+
+body {
+	overflow-y: hidden;
+}
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.panel-body {
+	.label {
+		white-space: pre-line;
+		cursor: pointer;
+		margin: 0px 1px;
+	}
+}
