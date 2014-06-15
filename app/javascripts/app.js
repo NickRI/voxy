@@ -1,9 +1,9 @@
-var voxyApp = angular.module('voxyApp', ['ngRoute', 'ngAnimate', 'voxyControllers', 'voxyDirectives']);
+var voxyApp = angular.module('voxyApp', ['ngRoute', 'voxyControllers', 'voxyDirectives']);
 var fs = require('fs');
 
 voxyApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
-		when('/', {
+		when('/listen-book', {
 			templateUrl: 'partials/player.html',
 			controller: 'PlayerCtrl'
 		}).
@@ -12,6 +12,6 @@ voxyApp.config(['$routeProvider', function($routeProvider) {
 			controller: 'BooksCtrl'
 		}).
 		otherwise({
-			redirectTo: '/'
+			redirectTo: '/books-list'
 		});
 }]);

@@ -1,7 +1,7 @@
 @import 'umixins';
 
 body {
-	overflow-y: hidden;
+	// overflow-y: hidden;
 }
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
@@ -12,4 +12,30 @@ body {
 		cursor: pointer;
 		margin: 0px 1px;
 	}
+}
+
+
+.book {
+	&.ng-enter {
+		@include transition(all, 0.7s);
+		opacity: 0;
+	}
+
+	&.ng-leave {
+		@include transition(all, 0.7s);
+		opacity: 1;
+	}
+
+	&.ng-enter-stagger {
+		@include transition(null, null, null, .3s);
+	}
+
+	&.ng-enter-active {
+		opacity: 1;
+	}
+
+	&.ng-leave-active {
+		opacity: 0;
+	}
+
 }

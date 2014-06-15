@@ -33,8 +33,8 @@
 }
 
 @mixin transition($property: all, $duration: 0.5s, $timing-function: null, $delay: null) {
-	@include cross-browser-properties(transition-property, $property);
-	@include cross-browser-properties(transition-duration, $duration);
+	@if ($property) { @include cross-browser-properties(transition-property, $property); }
+	@if ($duration) { @include cross-browser-properties(transition-duration, $duration); }
 	@if ($timing-function) { @include cross-browser-properties(transition-timing-function, $timing-function); }
 	@if ($delay) { @include cross-browser-properties(transition-delay, $delay); }
 }

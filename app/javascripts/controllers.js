@@ -1,7 +1,30 @@
-var voxyControllers = angular.module('voxyControllers', ['ui.bootstrap', 'ngStorage', 'voxyServices']);
+var voxyControllers = angular.module('voxyControllers', ['ui.bootstrap', 'ngAnimate', 'ngStorage', 'voxyServices']);
 
 
-voxyControllers.controller('NavigationCtrl', ['$rootScope', function($rootScope) {
+voxyControllers.controller('BooksCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
+	$scope.books = [];
+	$timeout(function () {
+
+		for(var i=0; i < 10; i++) {
+			$scope.books.push({
+				id: i,
+				image: "http://yastatic.net/morda-logo/i/logo.png",
+				name: "Test book"+i,
+				description: "Book description Book description Book description Book description"
+			});
+		}
+
+	}, 0);
+
+	$scope.deleteBook = function(id) {
+		$scope.books = $scope.books.filter(function(book) {
+			return book.id !== id;
+		});
+	}
+
+}]);
+
+voxyControllers.controller('NavigationCtrl', ['$scope', function($scope) {
 
 }]);
 
@@ -11,12 +34,12 @@ voxyControllers.controller('PlayerCtrl', ['$scope', '$rootScope', '$window', 'sp
 	$scope.playerStyle = {
 		'overflow-y': 'auto',
 		'overflow-x': 'none',
-		height: ($window.innerHeight - 273)+'px'
+		height: ($window.innerHeight - 280)+'px'
 	}
 
 	$window.addEventListener('resize', function() {
 		$scope.$apply(function () {
-			$scope.playerStyle.height = ($window.innerHeight - 273)+'px';
+			$scope.playerStyle.height = ($window.innerHeight - 280)+'px';
 		});
 	}, false);
 
@@ -158,12 +181,11 @@ voxyControllers.controller('PlayerCtrl', ['$scope', '$rootScope', '$window', 'sp
 
 }]);
 
-
 voxyControllers.controller('ChaptersCtrl', ['$scope', '$rootScope', '$window', '$localStorage', 'navigationService',  function ($scope, $rootScope, $window, $localStorage, navigationService) {
 	
 	$scope.chaptersStyle = {
 		'overflow-y': 'auto',
-		height: ($window.innerHeight - 200)+'px'
+		height: ($window.innerHeight - 207)+'px'
 	};
 
 	$scope.storage = $localStorage.$default({
@@ -173,7 +195,7 @@ voxyControllers.controller('ChaptersCtrl', ['$scope', '$rootScope', '$window', '
 
 	$window.addEventListener('resize', function() {
 		$scope.$apply(function () {
-			$scope.chaptersStyle.height = ($window.innerHeight - 200)+'px';
+			$scope.chaptersStyle.height = ($window.innerHeight - 207)+'px';
 		});
 	}, false);
 
@@ -193,9 +215,4 @@ voxyControllers.controller('ChaptersCtrl', ['$scope', '$rootScope', '$window', '
 		var child = document.getElementById('sentense-'+index);
 		navigationService(parent, child, -50);
 	}
-}]);
-
-
-voxyControllers.controller('BooksCtrl', ['$scope', '$rootScope', '$localStorage', function ($scope, $rootScope, $localStorage) {
-	console.log("books")
 }]);
