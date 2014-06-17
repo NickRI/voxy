@@ -1,9 +1,13 @@
-var voxyApp = angular.module('voxyApp', ['ngRoute', 'voxyControllers', 'voxyDirectives']);
+var voxyApp = angular.module('voxyApp', ['ngRoute', 'voxyControllers', 'voxyDirectives', 'voxyFilters']);
 var fs = require('fs');
 
 voxyApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
-		when('/listen-book', {
+		when('/listen-book/:bookId', {
+			templateUrl: 'partials/player.html',
+			controller: 'PlayerCtrl'
+		}).
+		when('/listen-book/', {
 			templateUrl: 'partials/player.html',
 			controller: 'PlayerCtrl'
 		}).
