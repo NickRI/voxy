@@ -4,7 +4,8 @@ voxyApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
 		when('/listen-book/:bookId', {
 			templateUrl: 'partials/player.html',
-			controller: 'PlayerCtrl'
+			controller: 'PlayerCtrl',
+			controllerAs: "player"
 		}).
 		when('/listen-book/', {
 			templateUrl: 'partials/player.html',
