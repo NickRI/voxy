@@ -1,8 +1,7 @@
-
 <div class="col-md-9 col-xs-9">
-	<input type="file" id="input-file" class="hidden" onchange="angular.element(this).scope().fileChange(this.value)"/>
+	<input type="file" id="input-file" class="hidden" onchange="angular.element(this).scope().loadFile(this.value)"/>
 
-	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+	<alert ng-repeat="alert in player.alerts" type="{{alert.type}}" close="player.closeAlert($index)">
 		<strong>{{alert.head}}:</strong>
 		<span>{{alert.text}}</span>
 	</alert>
@@ -21,7 +20,7 @@
 						<div class="form-group col-sm-4">
 							<div class="input-group input-group-sm">
 								<span class="input-group-addon">Autoscroll</span>
-								<select class="form-control" ng-model="$parent.$parent.autoscroll" ng-init="$parent.$parent.autoscroll = 'top'">
+								<select class="form-control" ng-model="player.autoscroll" ng-init="player.autoscroll = 'top'">
 									<option>top</option>
 									<option>bottom</option>
 									<option>disabled</option>
@@ -33,9 +32,9 @@
 							<div class="input-group input-group-sm">
 								<span class="input-group-addon">Scroll Offset</span>
 								<input type="number" class="form-control" min="0" step="10" max="500"
-								ng-disabled="$parent.$parent.autoscroll == 'disabled'"
-								ng-model="$parent.$parent.scrollOffset"
-								ng-init="$parent.$parent.scrollOffset = 50"
+								ng-disabled="player.autoscroll == 'disabled'"
+								ng-model="player.scrollOffset"
+								ng-init="player.scrollOffset = 50"
 								/>
 							</div>
 						</div>
@@ -51,15 +50,15 @@
 					<div class="row">
 						
 						<div class="form-group col-sm-3">
-							<button type="button" class="btn btn-primary" ng-model="$parent.$parent.showByChapters" ng-init="$parent.$parent.showByChapters = true" btn-checkbox>
-								Show by chapters
+							<button type="button" class="btn btn-primary" ng-model="player.splitByChapters" btn-checkbox>
+								Split by chapters
 							</button>
 						</div>
 
 						<div class="form-group col-sm-3">
 							<div class="input-group input-group-sm">
 								<span class="input-group-addon">Font size</span>
-								<select class="form-control" ng-model="playerStyle['font-size']" ng-init="playerStyle['font-size'] = '14px'">
+								<select class="form-control" ng-model="player.playerStyle['font-size']" ng-init="player.playerStyle['font-size'] = '14px'">
 									<optgroup label="small">
 										<option>11px</option>
 										<option>12px</option>
@@ -86,8 +85,8 @@
 							<div class="input-group input-group-sm">
 								<span class="input-group-addon">Line height</span>
 								<input type="number" class="form-control" min="1.0" max="2.0" step="0.1"
-								ng-model="playerStyle['line-height']"
-								ng-init="playerStyle['line-height'] = 1.5" />
+								ng-model="player.playerStyle['line-height']"
+								ng-init="player.playerStyle['line-height'] = 1.5" />
 							</div>
 						</div>
 
@@ -98,19 +97,19 @@
 
 		</div>
 
-		<div class="panel-body text-editor" ng-style="playerStyle" ng-autoresize="280">
+		<div class="panel-body text-editor" ng-style="player.playerStyle" ng-autoresize="280">
 			<span
-				id="sentense-{{$index}}"
+				id="sentense-{{sentense.id}}"
 				class="label label-default break-{{sentense.endlines}}"
 				ng-class="
 				{
-					'label-success': $index == $root.selectedIndex, 
-					'label-info': $index == $root.foundIndex,
-					'label-warning': $index == $root.bookmarkIndex,
-					'label-danger': ($index == $root.selectedIndex && $parent.alerts.length !== 0)
+					'label-success':	sentense.id == player.selectedIndex && player.chapterIndex == -1 && player.bookmarkIndex == -1,
+					'label-info':			sentense.id == player.chapterIndex,
+					'label-warning':	sentense.id == player.bookmarkIndex,
+					'label-danger':		sentense.id == player.selectedIndex && player.getDangerAlerts().length !== 0
 				}"
-				ng-click="$root.selectedIndex = $index; $root.foundIndex = -1; $root.bookmarkIndex = -1;"
-				ng-repeat="sentense in $root.sentenses | chapters:showByChapters track by sentense.id">{{sentense.text}}</span>
+				ng-click="player.selectedIndex = sentense.id; player.chapterIndex = -1; player.bookmarkIndex = -1;"
+				ng-repeat="sentense in player.sentenses | chapters:player.splitByChapters:player.selectedIndex:player.chapters track by sentense.id">{{sentense.text}}</span>
 		</div>
 
 		<div class="panel-footer">
@@ -119,25 +118,26 @@
 				<div class="col-md-3">
 					<button type="button" class="btn"
 						ng-class="{
-							'btn-default': state == 'none',
-							'btn-success': state == 'loaded' || state == 'frozen',
-							'btn-warning': state == 'plays',
-							'btn-danger': state === 'error'
+							'btn-default': player.state == 'none',
+							'btn-primary': player.state == 'loaded',
+							'btn-success': player.state == 'frozen',
+							'btn-warning': player.state == 'plays',
+							'btn-danger': player.state === 'error'
 						}"
-						ng-click="speak()"
-						ng-disabled="state == 'none'">
-						{{humanizeState()}}
+						ng-click="player.speak()"
+						ng-disabled="player.state == 'none'">
+						{{player.humanizeState()}}
 					</button>
 				</div>
 
 				<div class="col-md-3">
-					<button type="button" class="btn btn-primary" ng-click="openFile()" ng-hide="bookReading">
+					<button type="button" class="btn btn-primary" ng-click="player.openFile()" ng-hide="player.bookLoaded">
 						Open file
 					</button>
 				</div>
 
 				<div class="col-md-6">
-					<progressbar class="progress-striped active" value="$root.selectedIndex / ($root.sentenses.length -1) * 100" type="success">
+					<progressbar class="progress-striped active" value="player.selectedIndex / (player.sentenses.length -1) * 100" type="success">
 						{{$$prevSibling.percent}}%
 					</progressbar>
 				</div>
@@ -148,7 +148,7 @@
 
 </div>
 
-<div class="col-md-3 col-xs-3" ng-controller="ChaptersCtrl" ng-class="{ 'slide-out' : hide }" ng-init="hide = true">
+<div class="col-md-3 col-xs-3" ng-class="{ 'slide-out' : hide }" ng-init="hide = true">
 
 	<accordion close-others="true">
 		<accordion-group>
@@ -161,16 +161,17 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-eye-open"></span>
 					</span>
-					<input type="text" class="form-control" ng-model="storage.chapter.text" placeholder="search text">
+					<input type="text" class="form-control" ng-model="player.chapterQuery.text" placeholder="search text">
 				</div>
 
 				<br/>
 				<ul class="nav nav-pills nav-stacked">
 					<li
-						ng-class="{ 'active': sentense.id <= $root.selectedIndex }"
-						ng-repeat="sentense in $root.chapters = ($root.sentenses | filter:storage.chapter) track by sentense.id"
-						ng-click="navigateTo(sentense.id, 'foundIndex')">
-						<a href="">{{sentense.text}}<span class="pull-right badge">{{sentense.id}}</span></a>
+						ng-class="{ 'active': sentense.id <= player.selectedIndex }"
+						ng-repeat="sentense in player.chapters = (player.sentenses | filter:player.chapterQuery) track by $index"
+						ng-click="player.navigateTo(sentense.id, 'chapterIndex')"
+						title="{{sentense.id}}">
+						<a href="">{{sentense.text}}<span class="pull-right badge">{{$index}}</span></a>
 					</li>
 				</ul>
 
@@ -183,13 +184,13 @@
 			</accordion-heading>
 			<div ng-autoresize="207" style="overflow-y: auto">
 
-				<div class="btn-group-vertical" ng-repeat="bookmark in storage.bookmarks">
-					<button type="button" class="btn btn-warning" style="white-space: normal;" ng-click="navigateTo(bookmark.sentense, 'bookmarkIndex')">
+				<div class="btn-group-vertical" ng-repeat="bookmark in player.bookmarks">
+					<button type="button" class="btn btn-warning" style="white-space: normal;" ng-click="player.navigateTo(bookmark.sentense, 'bookmarkIndex')">
 						<span class="badge">{{bookmark.sentense}}</span>
 						<hr style="margin: 5px 0;"/>
 						{{bookmark.text}}
 					</button>
-					<button type="button" class="btn btn-danger" ng-click="deleteBookmark(bookmark.index)">
+					<button type="button" class="btn btn-danger" ng-click="player.deleteBookmark(bookmark.index)">
 						<span class="glyphicon glyphicon-remove-sign"></span>
 					</button>
 					<br/>
@@ -198,10 +199,10 @@
 				<br/>
 				
 				<div class="btn-group btn-group-xs">
-					<button type="button" class="btn btn-primary" ng-click="addBookmark($root.sentenses[$root.selectedIndex])">
+					<button type="button" class="btn btn-primary" ng-click="player.addBookmark(player.sentenses[player.selectedIndex])">
 						<span class="glyphicon glyphicon-plus"></span> Add bookmark
 					</button>
-					<button type="button" class="btn btn-danger" ng-click="storage.bookmarks = []">
+					<button type="button" class="btn btn-danger" ng-click="player.bookmarks = []">
 						<span class="glyphicon glyphicon-trash"></span> Clear all
 					</button>
 				</div>
