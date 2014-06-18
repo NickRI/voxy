@@ -6,7 +6,7 @@ voxyControllers.controller('BooksCtrl', ['$scope', '$timeout', '$http', '$localS
 		$scope.storage = $localStorage.$default({
 			books: [],
 			bookmarks: [],
-			chapter: { text: "search text"},
+			chapterQuery: { text: "search text"},
 		});
 	}, 10);
 
@@ -20,7 +20,7 @@ voxyControllers.controller('BooksCtrl', ['$scope', '$timeout', '$http', '$localS
 			bookmarks: [],
 			possibleImages: [],
 			file: null,
-			chapter: { text: "search text"},
+			chapterQuery: { text: "search text"},
 			editmode: true,
 		});
 	}
