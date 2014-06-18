@@ -14,7 +14,6 @@ body {
 	}
 }
 
-
 .book {
 	&.ng-enter {
 		@include transition(all, 0.7s);
@@ -56,5 +55,22 @@ body {
 			@include cross-browser-properties(filter, #{'grayscale(0%)'});
 			border: 1px solid darken(red, 10%);
 		}
+	}
+}
+
+.text-editor {
+	overflow-y: auto;
+	overflow-wrap: break-word;
+	
+	$content: "\A";
+	@for $i from 1 through 10 {
+		.break-#{$i} {
+			padding-left: 0px;
+			&:before {
+				content: $content;
+				white-space: pre;
+			} 
+		}
+		$content: $content + "\A";
 	}
 }
