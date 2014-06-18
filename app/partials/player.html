@@ -85,7 +85,9 @@
 						<div class="form-group col-sm-3">
 							<div class="input-group input-group-sm">
 								<span class="input-group-addon">Line height</span>
-								<input type="number" class="form-control" min="1.0" max="2.0" step="0.1" ng-model="playerStyle['line-height']" ng-init="playerStyle['line-height'] = 1.5">
+								<input type="number" class="form-control" min="1.0" max="2.0" step="0.1"
+								ng-model="playerStyle['line-height']"
+								ng-init="playerStyle['line-height'] = 1.5" />
 							</div>
 						</div>
 
@@ -96,7 +98,7 @@
 
 		</div>
 
-		<div class="panel-body text-editor" ng-style="playerStyle">
+		<div class="panel-body text-editor" ng-style="playerStyle" ng-autoresize="280">
 			<span
 				id="sentense-{{$index}}"
 				class="label label-default break-{{sentense.endlines}}"
@@ -153,7 +155,7 @@
 			<accordion-heading>
 				Chapters finder <span class="pull-right glyphicon glyphicon-tags"></span>
 			</accordion-heading>
-			<div ng-style="chaptersStyle">
+			<div ng-autoresize="207" style="overflow-y: auto">
 			
 				<div class="input-group">
 					<span class="input-group-addon">
@@ -179,7 +181,7 @@
 			<accordion-heading>
 				Bookmarks <span class="pull-right glyphicon glyphicon-bookmark"></span>
 			</accordion-heading>
-			<div ng-style="chaptersStyle">
+			<div ng-autoresize="207" style="overflow-y: auto">
 
 				<div class="btn-group-vertical" ng-repeat="bookmark in storage.bookmarks">
 					<button type="button" class="btn btn-warning" style="white-space: normal;" ng-click="navigateTo(bookmark.sentense, 'bookmarkIndex')">
@@ -193,7 +195,6 @@
 					<br/>
 				</div>
 
-				<br/>
 				<br/>
 				
 				<div class="btn-group btn-group-xs">

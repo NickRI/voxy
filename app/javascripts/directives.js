@@ -1,16 +1,17 @@
-var voxyDirectives = angular.module('voxyDirectives', ['ngSanitize']);
+var voxyDirectives = angular.module('voxyDirectives', []);
 
-voxyDirectives.directive('line', function() {
+voxyDirectives.directive('ngAutoresize', ['$window', function($window) {
 	var directive = {
-		replace: true,
-		restrict: 'E',
-		template: "<span>{{sentense.text}}</span>",
+		restrict: 'A',
 		link: function($scope, element, attrs) {
-			for (var i = 0; i < $scope.sentense.endlines; i++) {
-				element[0].parentNode.insertBefore(document.createElement("br"), element[0]);
-			}
+			element[0].style.height = ($window.innerHeight - attrs.ngAutoresize) + "px";
+			$window.addEventListener('resize', function() {
+				$scope.$apply(function () {
+					element[0].style.height = ($window.innerHeight - attrs.ngAutoresize) + "px";
+				});
+			}, false);
 		}
 	}
 
 	return directive;
-});
+}]);
