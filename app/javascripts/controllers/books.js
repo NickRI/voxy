@@ -1,4 +1,4 @@
-var voxyControllers = angular.module('voxyControllers', ['ngAnimate', 'ngStorage']);
+var voxyControllers = angular.module('voxyControllers');
 
 voxyControllers.controller('BooksCtrl', ['$scope', '$timeout', '$http', '$localStorage', function ($scope, $timeout, $http, $localStorage) {
 
