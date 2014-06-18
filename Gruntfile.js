@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 		},
 		watch: {
 			all: {
-				files: ['app/**', 'scss/**'],
+				files: ['app/**', 'scss/**', 'html/**'],
 				tasks: ['shell:kill', "build", "run"],
 				options: {
 					reload: true,
