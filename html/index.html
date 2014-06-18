@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="voxyApp">
+<head>
+	<title>Voxy audio reader</title>
+	<!-- build:script bower -->
+	<!-- /build -->
+
+	<!-- build:style bootstrap -->
+	<!-- /build -->
+	
+	<!-- build:style mystyles -->
+	<!-- /build -->
+</head>
+<body>
+	<div class="container-fluid">
+		<nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation" ng-controller="NavigationCtrl">
+			<a class="navbar-brand" href="">Voxy</a>
+			<ul class="nav navbar-nav">
+				<li>
+					<a href="#/books-list">Books</a>
+				</li>
+				<li>
+					<a href="#/listen-book">Listen book</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="row" ng-view></div>
+	</div>
+	<!-- build:script application -->
+	<!-- /build -->
+</body>

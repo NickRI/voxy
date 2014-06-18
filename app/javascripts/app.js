@@ -1,4 +1,4 @@
-var voxyApp = angular.module('voxyApp', ['ngRoute', 'voxyControllers', 'voxyDirectives', 'voxyFilters']);
+var voxyApp = angular.module('voxyApp', ['ngRoute', 'voxyControllers', 'voxyDirectives']);
 var fs = require('fs');
 
 voxyApp.config(['$routeProvider', function($routeProvider) {

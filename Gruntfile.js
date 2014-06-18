@@ -46,15 +46,45 @@ module.exports = function(grunt) {
 					atBegin: true,
     		}
 			}
+		},
+		htmlbuild: {
+			prod: {
+				src: 'html/index.html',
+				dest: 'app/',
+				options: {
+					beautify: true,
+					relative: true,
+					scripts: {
+						application: "./app/javascripts/**/*.js",
+						bower: [
+							"dist/jquery",
+							"angular",
+							"angular-route",
+							"angular-animate",
+							"ngStorage",
+							"ui-bootstrap",
+							"ui-bootstrap-tpls",
+						].map(function(module) { return "./app/bower_components/**/"+ module+".js" })
+					},
+					styles: {
+						mystyles: "./app/stylesheets/**/*.css",
+						bootstrap: [
+							"./app/bower_components/bootstrap/dist/css/bootstrap.css",
+							"./app/bower_components/bootstrap/dist/css/bootstrap-theme.css"
+						]
+					}
+				}
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-shell-spawn');
+	grunt.loadNpmTasks('grunt-html-build');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-node-webkit-builder');
-	grunt.registerTask('build', ['sass', 'nodewebkit', 'copy']);
+	grunt.registerTask('build', ['sass', 'htmlbuild', 'nodewebkit', 'copy']);
 	grunt.registerTask('run', ['shell:run-linux64']);
 	grunt.registerTask('default', ['watch']);
 };

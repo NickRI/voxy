@@ -40,3 +40,27 @@
   opacity: 1; }
 .book.ng-leave-active {
   opacity: 0; }
+.book img {
+  max-height: 35%; }
+
+.book-editing .image {
+  cursor: pointer;
+  -moz-filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  filter: grayscale(100%); }
+  .book-editing .image:hover {
+    -moz-filter: grayscale(50%);
+    -webkit-filter: grayscale(50%);
+    -o-filter: grayscale(50%);
+    -ms-filter: grayscale(50%);
+    filter: grayscale(50%);
+    border: 1px solid black; }
+  .book-editing .image.selected {
+    -moz-filter: grayscale(0%);
+    -webkit-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+    -ms-filter: grayscale(0%);
+    filter: grayscale(0%);
+    border: 1px solid #cc0000; }

@@ -1,32 +1,4 @@
-var voxyControllers = angular.module('voxyControllers', ['ui.bootstrap', 'ngAnimate', 'ngStorage', 'voxyServices']);
-
-
-voxyControllers.controller('BooksCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
-	$scope.books = [];
-	$timeout(function () {
-
-		for(var i=0; i < 10; i++) {
-			$scope.books.push({
-				id: i,
-				image: "http://yastatic.net/morda-logo/i/logo.png",
-				name: "Test book"+i,
-				description: "Book description Book description Book description Book description"
-			});
-		}
-
-	}, 0);
-
-	$scope.deleteBook = function(id) {
-		$scope.books = $scope.books.filter(function(book) {
-			return book.id !== id;
-		});
-	}
-
-}]);
-
-voxyControllers.controller('NavigationCtrl', ['$scope', function($scope) {
-
-}]);
+var voxyControllers = angular.module('voxyControllers', ['ui.bootstrap', 'ngStorage', 'voxyServices', 'voxyFilters']);
 
 voxyControllers.controller('PlayerCtrl', ['$scope', '$rootScope', '$window', 'speakerService', 'navigationService', function ($scope, $rootScope, $window, speakerService, navigationService) {
 	speakerService.spawn();
@@ -179,40 +151,4 @@ voxyControllers.controller('PlayerCtrl', ['$scope', '$rootScope', '$window', 'sp
 		}
 	}
 
-}]);
-
-voxyControllers.controller('ChaptersCtrl', ['$scope', '$rootScope', '$window', '$localStorage', 'navigationService',  function ($scope, $rootScope, $window, $localStorage, navigationService) {
-	
-	$scope.chaptersStyle = {
-		'overflow-y': 'auto',
-		height: ($window.innerHeight - 207)+'px'
-	};
-
-	$scope.storage = $localStorage.$default({
-		bookmarks: [],
-		chapter: { text: "search text"}
-	});
-
-	$window.addEventListener('resize', function() {
-		$scope.$apply(function () {
-			$scope.chaptersStyle.height = ($window.innerHeight - 207)+'px';
-		});
-	}, false);
-
-	$scope.addBookmark = function(sentense) {
-		$scope.storage.bookmarks.push({ text: sentense.text, sentense: sentense.index, index: $scope.storage.bookmarks.length });
-	}
-
-	$scope.deleteBookmark = function(index) {
-		$scope.storage.bookmarks = $scope.storage.bookmarks.filter(function(bookmark) {
-			return index !== bookmark.index;
-		});
-	}
-
-	$scope.navigateTo = function(index, indexName) {
-		$rootScope[indexName] = index;
-		var parent = document.getElementsByClassName('text-editor')[0];
-		var child = document.getElementById('sentense-'+index);
-		navigationService(parent, child, -50);
-	}
 }]);

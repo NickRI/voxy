@@ -37,9 +37,9 @@
 					<h3>{{book.name}} <small>{{book.author}}</small></h3>
 					<details>
 						<summary>
-							<small>{{book.description | limitTo:200}}</small>
+							<small>Description</small>
 						</summary>
-						<small>{{book.description.substr(200)}}</small>
+						<small>{{book.description}}</small>
 					</details>
 					<hr/>
 					<div class="btn-group btn-group-md btn-group-xs">
@@ -67,7 +67,7 @@
 						<div class="thumbnail image"
 							ng-click="book.image = image.url; $parent.selectedImageIndex = $index"
 							ng-class="{ 'selected' : ($parent.selectedImageIndex == $index || image.url == book.image)}">
-							<img ng-src="{{image.url}}" />
+							<img ng-src="{{image.url}}" title="{{image.title}}"/>
 						</div>
 					</div>
 				</div>
