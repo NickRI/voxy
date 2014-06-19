@@ -23,24 +23,21 @@ function ($scope, $window, $routeParams, $localStorage, speakerService, navigati
 	}
 
 	if ($routeParams.bookId) {
-		var book = $localStorage.books.filter(function(book) { return book.id == $routeParams.bookId; }).shift();
+		this.book = $localStorage.books.filter(function(book) { return book.id == $routeParams.bookId; }).shift();
 		this.bookLoaded = true;
 		this.state = 'loading';
-		this.bookmarks = book.bookmarks;
-		this.chapterQuery = book.chapterQuery;
-		this.loadFile(book.file);
+		this.loadFile(this.book.file);
 	} else {
 		this.bookLoaded = false;
-		this.bookmarks = $localStorage.bookmarks;
-		this.chapterQuery = $localStorage.chapterQuery;
+		this.book = $localStorage;
 	}
 
 	this.addBookmark = function(sentense) {
-		this.bookmarks.push({ text: sentense.text, sentense: sentense.id, index: this.bookmarks.length });
+		this.book.bookmarks.push({ text: sentense.text, sentense: sentense.id, index: this.book.bookmarks.length });
 	}
 
 	this.deleteBookmark = function(index) {
-		this.bookmarks = this.bookmarks.filter(function(bookmark) {
+		this.book.bookmarks = this.book.bookmarks.filter(function(bookmark) {
 			return index !== bookmark.index;
 		});
 	}
@@ -122,6 +119,9 @@ function ($scope, $window, $routeParams, $localStorage, speakerService, navigati
 				}
 			});
 		}
+		
+		this.chapterIndex = -1;
+		this.bookmarkIndex = -1;
 
 		if (this.state === 'loaded') {
 			play();

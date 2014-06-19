@@ -161,14 +161,14 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-eye-open"></span>
 					</span>
-					<input type="text" class="form-control" ng-model="player.chapterQuery.text" placeholder="search text">
+					<input type="text" class="form-control" ng-model="player.book.chapterQuery.text" placeholder="search text">
 				</div>
 
 				<br/>
 				<ul class="nav nav-pills nav-stacked">
 					<li
 						ng-class="{ 'active': sentense.id <= player.selectedIndex }"
-						ng-repeat="sentense in player.chapters = (player.sentenses | filter:player.chapterQuery) track by $index"
+						ng-repeat="sentense in player.chapters = (player.sentenses | filter:player.book.chapterQuery) track by $index"
 						ng-click="player.navigateTo(sentense.id, 'chapterIndex')"
 						title="{{sentense.id}}">
 						<a href="">{{sentense.text}}<span class="pull-right badge">{{$index}}</span></a>
@@ -184,7 +184,7 @@
 			</accordion-heading>
 			<div ng-autoresize="207" style="overflow-y: auto">
 
-				<div class="btn-group-vertical" ng-repeat="bookmark in player.bookmarks">
+				<div class="btn-group-vertical" ng-repeat="bookmark in player.book.bookmarks">
 					<button type="button" class="btn btn-warning" style="white-space: normal;" ng-click="player.navigateTo(bookmark.sentense, 'bookmarkIndex')">
 						<span class="badge">{{bookmark.sentense}}</span>
 						<hr style="margin: 5px 0;"/>
@@ -202,7 +202,7 @@
 					<button type="button" class="btn btn-primary" ng-click="player.addBookmark(player.sentenses[player.selectedIndex])">
 						<span class="glyphicon glyphicon-plus"></span> Add bookmark
 					</button>
-					<button type="button" class="btn btn-danger" ng-click="player.bookmarks = []">
+					<button type="button" class="btn btn-danger" ng-click="player.book.bookmarks = []">
 						<span class="glyphicon glyphicon-trash"></span> Clear all
 					</button>
 				</div>
