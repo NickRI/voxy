@@ -90,12 +90,18 @@ function ($scope, $window, $routeParams, $localStorage, speakerService, navigati
 			self.state = 'plays';
 			if (self.autoscroll !== 'disabled') {
 				var parent = document.getElementsByClassName('text-editor')[0];
-				var child = document.getElementById('sentense-'+self.selectedIndex);
-				if (self.autoscroll === 'top') {
-					navigationService(parent, child, -self.scrollOffset);
-				} else if (self.autoscroll === 'bottom') {
-					navigationService(parent, child, -(parent.offsetHeight - self.scrollOffset));
-				}
+
+				var checkExist = setInterval(function() {
+					if ((child = document.getElementById('sentense-'+self.selectedIndex))) {
+						clearInterval(checkExist);
+						if (self.autoscroll === 'top') {
+							navigationService(parent, child, -self.scrollOffset);
+						} else if (self.autoscroll === 'bottom') {
+							navigationService(parent, child, -(parent.offsetHeight - self.scrollOffset));
+						}
+					}
+				}, 100);
+
 			}
 			speakerService.say("voice_msu_ru_nsh_clunits", self.sentenses[self.selectedIndex].text, function(error) {
 				if (error) {
