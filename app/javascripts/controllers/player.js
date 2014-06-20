@@ -42,12 +42,25 @@ function ($scope, $window, $routeParams, $localStorage, speakerService, navigati
 		});
 	}
 
+	this.waitAndNavigate = function(index) {
+		var self = this;
+		var parent = document.getElementsByClassName('text-editor')[0];
+		var checkExist = setInterval(function() {
+			if ((child = document.getElementById('sentense-'+index))) {
+				clearInterval(checkExist);
+				if (self.autoscroll === 'top') {
+					navigationService(parent, child, -self.scrollOffset);
+				} else if (self.autoscroll === 'bottom') {
+					navigationService(parent, child, -(parent.offsetHeight - self.scrollOffset));
+				}
+			}
+		}, 100);
+	}
+
 	this.navigateTo = function(index, indexName) {
 		this.selectedIndex = index;
 		this[indexName] = index;
-		var parent = document.getElementsByClassName('text-editor')[0];
-		var child = document.getElementById('sentense-'+index);
-		navigationService(parent, child, -50);
+		this.waitAndNavigate(index);
 	}
 
 	this.getDangerAlerts = function() {
@@ -86,19 +99,7 @@ function ($scope, $window, $routeParams, $localStorage, speakerService, navigati
 		function play() {
 			self.state = 'plays';
 			if (self.autoscroll !== 'disabled') {
-				var parent = document.getElementsByClassName('text-editor')[0];
-
-				var checkExist = setInterval(function() {
-					if ((child = document.getElementById('sentense-'+self.selectedIndex))) {
-						clearInterval(checkExist);
-						if (self.autoscroll === 'top') {
-							navigationService(parent, child, -self.scrollOffset);
-						} else if (self.autoscroll === 'bottom') {
-							navigationService(parent, child, -(parent.offsetHeight - self.scrollOffset));
-						}
-					}
-				}, 100);
-
+				self.waitAndNavigate(self.selectedIndex);
 			}
 			speakerService.say("voice_msu_ru_nsh_clunits", self.sentenses[self.selectedIndex].text, function(error) {
 				if (error) {
