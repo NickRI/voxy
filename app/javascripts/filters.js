@@ -32,6 +32,6 @@ voxyFilters.filter('chapters', [function() {
 		} else {
 			return sentenses;
 		}
-		
+
 	}
 }]);

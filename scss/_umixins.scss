@@ -42,7 +42,7 @@
 
 @mixin keyframes($name) {
 	@-webkit-keyframes #{$name} {
-		@content; 
+		@content;
 	}
 	@-moz-keyframes #{$name} {
 		@content;

@@ -61,7 +61,7 @@ body {
 .text-editor {
 	overflow-y: auto;
 	overflow-wrap: break-word;
-	
+
 	$content: "\A";
 	@for $i from 1 through 10 {
 		.break-#{$i} {
@@ -69,7 +69,7 @@ body {
 			&:before {
 				content: $content;
 				white-space: pre;
-			} 
+			}
 		}
 		$content: $content + "\A";
 	}
