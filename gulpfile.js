@@ -2,6 +2,7 @@ var path  = require('path');
 var spawn = require('child_process').spawn;
 var os    = require('os');
 
+var shell  = require('gulp-shell');
 var args   = require('yargs').argv;
 var gulp   = require('gulp');
 var sass   = require('gulp-sass');
@@ -68,12 +69,7 @@ gulp.task('webkit', function (callback) {
 
 });
 
-gulp.task('run', function () {
-  var voxy = spawn('./build/voxy/linux64/nw', {detached: true});
-  voxy.stderr.on('data', function (data) {
-    console.log('stderr: ' + data);
-  });
-});
+gulp.task('run', shell.task('./build/voxy/linux64/nw'));
 
 
 gulp.task('build', ['sass', 'html', 'webkit']);

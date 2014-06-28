@@ -12,6 +12,7 @@
     "gulp-grep-stream": "0.0.2",
     "gulp-notify": "^1.4.0",
     "gulp-sass": "^0.7.2",
+    "gulp-shell": "^0.2.7",
     "gulp-spa": "^0.2.2",
     "node-webkit-builder": "0.0.2",
     "yargs": "^1.2.6"
