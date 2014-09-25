@@ -8,6 +8,7 @@ Simple audioreader for linux festival speech engine. UI bases on node-webkit.
 - Node.js
 - Gulp installed globaly `npm install -g gulp`
 - Git client
+- festival `sudo apt-get install festival`
 
 ### Install
 ```
