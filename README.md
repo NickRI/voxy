@@ -1,6 +1,6 @@
 # voxy
 
-Simple audioreader for linux festival speech engine. Based on 
+Simple audioreader for linux festival speech engine. UI bases on node-webkit.
 
 ## Install and run
 
@@ -11,12 +11,11 @@ Simple audioreader for linux festival speech engine. Based on
 
 ### Install
 ```
-git clone https://github.com/rootStar-lock/voxy.git
-cd voxy
-gulp build
+$ git clone https://github.com/rootStar-lock/voxy.git
+$ cd voxy
+$ npm install && bower install
+$ gulp build
 ```
 
 ### Run
 To run your build exec `gulp run` or run needed platform build in ./build directory.
-
-

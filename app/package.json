@@ -11,7 +11,7 @@
   "window": {
   	"width": 1000,
     "height": 750,
-  	"toolbar": true,
+  	"toolbar": false,
   	"position": "center"
   }
 }
