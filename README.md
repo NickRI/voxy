@@ -2,6 +2,9 @@
 
 Simple audioreader for linux festival speech engine. UI bases on node-webkit.
 
+![](https://github.com/rootStar-lock/voxy/blob/master/images/voxy-main.png)
+![](https://github.com/rootStar-lock/voxy/blob/master/images/voxy-read.png)
+
 ## Install and run
 
 ### Requires
