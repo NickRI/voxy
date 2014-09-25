@@ -52,7 +52,7 @@ gulp.task('webkit', function (callback) {
   var builder = new webkit({
     cacheDir  : os.tmpdir(),
     files     : './app/**',
-    platforms : 'linux64',
+    platforms : ['win', 'osx', 'linux32', 'linux64'],
   });
 
   builder.build(function (error) {
